@@ -1,5 +1,6 @@
-#!name=NGA Image Fix
-#!desc=Replace deprecated img.nga.178.com with img.nga.cn
+#!name=NGA图片域名修复
+#!desc=修复NGA论坛助手因img.nga.178.com失效导致图片无法加载的问题
+#!author=Ka1er
 
 [Rewrite]
 ^https:\/\/img\.nga\.178\.com\/(.*) https://img.nga.cn/$1 header
