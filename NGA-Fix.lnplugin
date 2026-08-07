@@ -1,0 +1,13 @@
+#!name=NGA图片修复
+#!desc=修复NGA论坛助手图片域名 img.nga.178.com 无法访问
+
+[Rule]
+DOMAIN,img.nga.178.com,DIRECT
+DOMAIN,img.nga.cn,DIRECT
+DOMAIN,img4.nga.cn,DIRECT
+
+[URL Rewrite]
+^https:\/\/img\.nga\.178\.com\/(.*) https://img4.nga.cn/$1 header
+
+[MITM]
+hostname = img.nga.178.com
