@@ -21,5 +21,6 @@ quantumult-x:///add-module?url=https://raw.githubusercontent.com/ka1er/NGA-Loon-
 ### 注意事项
 
 - 模块 `[mitM]` 已用 `%APPEND%` 追加解密域名，**不会覆盖你主配置里已有的 MITM 列表**，可单独开关/删除。
+- MITM hostname 已**显式枚举** `img.nga.178.com` 及 `img0`–`img10`（含原 Loon 版漏列的 `img1`），不依赖通配符，导入即用。
+- 重写规则用 `img(\d*)\.nga\.178\.com` 正则，自动覆盖任意数字后缀（`img.` / `img4.` / `img10.` 等），路径原样带到 `img$1.nga.cn`。
 - 导入后重开一次 QX 代理（MITM 变更的通病，否则解密不生效）。
-- `*.nga.178.com` 通配覆盖 img0–img9；若发现不带数字的 `img.nga.178.com` 图片不加载，把主机名改成 `img.nga.178.com, *.nga.178.com`。
