@@ -1,7 +1,7 @@
 #!name=NGA图片域名修复
 #!desc=修复NGA论坛助手因 imgN.nga.178.com 系列域名失效导致图片无法加载的问题，统一重定向到 imgN.nga.cn
 #!author=Ka1er
-#!version=2.0.0
+#!version=2.1.0
 
 [Rewrite]
 # img.nga.178.com  -> img.nga.cn
@@ -9,4 +9,4 @@
 ^https?:\/\/img(\d*)\.nga\.178\.com\/(.*) https://img$1.nga.cn/$2 header
 
 [MITM]
-hostname = img.nga.178.com, img0.nga.178.com, img2.nga.178.com, img3.nga.178.com, img4.nga.178.com, img5.nga.178.com, img6.nga.178.com, img7.nga.178.com, img8.nga.178.com, img9.nga.178.com
+hostname = *.nga.178.com
