@@ -4,7 +4,7 @@
 
 ## Loon 用户
 
-导入 `NGA-Fix.lnplugin`（透明 `header` 改写，客户端无感）。MITM hostname 已显式枚举 `img.nga.178.com` 及 `img0`–`img9`，实测可加载，保持现状不改动。
+导入 `NGA-Fix.lnplugin`（透明 `header` 改写，客户端无感）。MITM hostname 用通配 `img*.nga.178.com`，精确覆盖图床、不解密主站，实测可加载。
 
 ## Quantumult X 用户
 
@@ -28,7 +28,7 @@ QX 无 Loon 那种透明 `header` 改写类型，改用 `302`（图片照常加�
    QX「设置 → MitM → 主机名」添加一行：
 
    ```
-   *.nga.178.com
+   img*.nga.178.com
    ```
 
    确认 MitM 开关已开、证书已安装并信任。
@@ -38,5 +38,5 @@ QX 无 Loon 那种透明 `header` 改写类型，改用 `302`（图片照常加�
 ### 说明
 
 - 重写正则 `img(\d*)\.nga\.178\.com` 覆盖任意数字后缀（`img.` / `img4.` / `img10.` 等），路径原样带到 `img$1.nga.cn`。
-- MITM 用 QX 官方通配写法 `*.nga.178.com`（官方 sample.conf 注释：`wildcard * and ? are supported`），一行覆盖所有子域，无需逐条枚举。
+- MITM 用 QX 官方通配写法 `img*.nga.178.com`（官方 sample.conf 注释：`wildcard * and ? are supported`），`img*` 前缀精确覆盖图床（`img.`/`img4.`/`img10.` 等），不解密主站 `bbs.`/`www.` 等其它子域。
 - 已验证 Loon 版图片加载正常，说明站方路径结构一致，目标 `imgN.nga.cn` 正确。

@@ -9,4 +9,4 @@
 ^https?:\/\/img(\d*)\.nga\.178\.com\/(.*) https://img$1.nga.cn/$2 header
 
 [MITM]
-hostname = *.nga.178.com
+hostname = img*.nga.178.com
