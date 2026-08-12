@@ -8,19 +8,35 @@
 
 ## Quantumult X 用户
 
-使用模块文件 `nga-fix.conf`（QX 无透明改写类型，改用 `302`，图片照常加载）。
+QX 无 Loon 那种透明 `header` 改写类型，改用 `302`（图片照常加载，仅客户端多一次跳转）。
 
-**一键导入**（iPhone 上点击下面的链接，QX 弹出添加模块确认即可）：
+### 方案：重写引用 + 手动 MITM（推荐，零覆盖风险）
 
-```
-quantumult-x:///add-module?url=https://raw.githubusercontent.com/ka1er/NGA-Loon-Fix/main/nga-fix.conf&name=NGA图片域名修复
-```
+本仓库 `nga-fix.conf` 只含重写规则，用「重写→引用」导入，**不碰你的 MITM 列表**，避免模块导入覆盖主配置的风险。
 
-手动方式：把 `nga-fix.conf` 内容贴进 QX 配置，或「模块」里引用该文件。
+**步骤：**
 
-### 注意事项
+1. 一键引用重写（iPhone 上点击链接，QX 弹确认即可）：
 
-- 模块 `[mitM]` 已用 `%APPEND%` 追加解密域名，**不会覆盖你主配置里已有的 MITM 列表**，可单独开关/删除。
-- MITM hostname 采用 QX 官方通配写法 `\*.nga.178.com`（见 QX 官方 sample.conf：`wildcard * and ? are supported`），一行覆盖 `img.` / `img4.` / `img10.` 等所有子域，无需逐条枚举。
-- 重写规则用 `img(\d*)\.nga\.178\.com` 正则，自动覆盖任意数字后缀，路径原样带到 `img$1.nga.cn`。
-- 导入后重开一次 QX 代理（MITM 变更的通病，否则解密不生效）。
+   ```
+   quantumult-x:///add-resource?remote-resource={"rewrite_remote":[{"url":"https://raw.githubusercontent.com/ka1er/NGA-Loon-Fix/main/nga-fix.conf","tag":"NGA图片域名修复"}]}
+   ```
+
+   或手动：QX「设置 → 重写 → 引用」右上角添加，填入 raw 链接并开启。
+
+2. **手动添加 MITM 解密域名**（必做，否则重写不生效）：
+   QX「设置 → MitM → 主机名」添加一行：
+
+   ```
+   *.nga.178.com
+   ```
+
+   确认 MitM 开关已开、证书已安装并信任。
+
+3. **重开一次 QX 代理**（MITM 变更必须重启才加载，否则解密不生效）。
+
+### 说明
+
+- 重写正则 `img(\d*)\.nga\.178\.com` 覆盖任意数字后缀（`img.` / `img4.` / `img10.` 等），路径原样带到 `img$1.nga.cn`。
+- MITM 用 QX 官方通配写法 `*.nga.178.com`（官方 sample.conf 注释：`wildcard * and ? are supported`），一行覆盖所有子域，无需逐条枚举。
+- 已验证 Loon 版图片加载正常，说明站方路径结构一致，目标 `imgN.nga.cn` 正确。
